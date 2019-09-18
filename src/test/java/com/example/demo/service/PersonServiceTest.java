@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -15,7 +16,8 @@ import com.example.demo.service.impl.PersonServiceImpl;
 @RunWith(MockitoJUnitRunner.class)
 public class PersonServiceTest {
 
-	PersonService service;
+	@InjectMocks
+	PersonServiceImpl service;
 	
 	@Mock
 	PersonRepository repository;
@@ -23,10 +25,10 @@ public class PersonServiceTest {
 	@Mock
 	Person person;
 	
-	@Before
-	public void setUp() {
-		service = new PersonServiceImpl(repository);
-	}
+//	@Before
+//	public void setUp() {
+//		service = new PersonServiceImpl(repository);
+//	}
 	
 	@Test
 	public void shouldSaveAPerson() {

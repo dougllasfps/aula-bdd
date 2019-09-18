@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,6 +24,9 @@ public class PersonRepositoryTest {
 	@Autowired
 	PersonRepository repository;
 	
+	@Autowired
+	TestEntityManager entityManager;
+	
 	@Test
 	public void shouldSave() {
 		repository.save(Person.builder().build());
@@ -30,7 +34,7 @@ public class PersonRepositoryTest {
 	
 	@Test
 	public void shouldfindAll() {
-		repository.save(Person.builder().build());
+		entityManager.persist(Person.builder().build());
 		
 		List<Person> all = repository.findAll();
 		Assertions.assertThat(all).hasSize(1);
