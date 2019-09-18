@@ -1,39 +1,36 @@
 package com.example.demo.service;
 
-import static org.assertj.core.api.Assertions.*;
-import org.junit.Before;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.demo.model.entity.Person;
 import com.example.demo.model.repository.PersonRepository;
 import com.example.demo.service.impl.PersonServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
 public class PersonServiceTest {
 
-	@InjectMocks
+	@SpyBean
 	PersonServiceImpl service;
 	
-	@Mock
+	@MockBean
 	PersonRepository repository;
 	
 	@Mock
 	Person person;
 	
-//	@Before
-//	public void setUp() {
-//		service = new PersonServiceImpl(repository);
-//	}
-	
 	@Test
 	public void shouldSaveAPerson() {
 		Person saved = Person.builder().name("name").id(1).age(1).build();
 		Mockito.when(repository.save(person)).thenReturn(saved);
+		Mockito.doNothing().when(service).castException();
 		
 		Person result = service.save(person);
 		

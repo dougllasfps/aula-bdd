@@ -18,7 +18,12 @@ public class PersonServiceImpl implements PersonService{
 
 	@Override
 	public Person save(Person person) {
+		castException();
 		return repository.save(person);
+	}
+	
+	public void castException() {
+		throw new RuntimeException();
 	}
 	
 	
