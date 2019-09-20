@@ -23,7 +23,7 @@ public class PersonServiceImpl implements PersonService{
 	}
 	
 	public void castException() {
-		throw new RuntimeException();
+		throw new RuntimeException("error");
 	}
 	
 	

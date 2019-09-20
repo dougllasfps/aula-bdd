@@ -2,8 +2,11 @@ package com.example.demo.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.BDDAssertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +35,7 @@ public class PersonServiceTest {
 		Mockito.when(repository.save(person)).thenReturn(saved);
 		Mockito.doNothing().when(service).castException();
 		
+		
 		Person result = service.save(person);
 		
 		assertThat(result.getId()).isEqualTo(saved.getId());
@@ -39,5 +43,18 @@ public class PersonServiceTest {
 		assertThat(result.getAge()).isEqualTo(saved.getAge());
 		
 		Mockito.verify(repository, Mockito.times(1)).save(person);
+	}
+	
+	@Test
+	public void shouldCastErrorOnSavingPerson() {
+		
+		Throwable exception = Assertions.catchThrowable(() -> service.save(person));
+		
+		BDDAssertions
+			.then(exception)
+			.as("RuntimeException é lancada no erro de validacao")
+			.isInstanceOf(RuntimeException.class)
+			.as("verificando a msg de erro")
+			.hasMessage("error");
 	}
 }
